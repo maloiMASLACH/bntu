@@ -1,0 +1,11 @@
+.unitPageWrapper {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.unitPageShortInfo {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,17 @@
+.unitShortInfoWrapper {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 50px;
+}
+
+.unitShortInfoWrapper h1 {
+  font-weight: 700;
+}
+
+.unitShortInfoWrapper h2 {
+  margin: 0;
+  font-size: xx-large;
+  margin-bottom: 50px;
+  font-weight: 500;
+}

@@ -1,0 +1,38 @@
+.navBarWrapper {
+  display: flex;
+  width: -webkit-fill-available;
+  height: 80px;
+  justify-content: space-between;
+  padding: 0 120px;
+  align-items: center;
+
+  background-color: var(--global-nav-bar-color);
+}
+
+.navRightButtonsWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.navBarWrapper p {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--global-bg-color);
+  letter-spacing: 1px;
+  transition: 0.2s;
+}
+
+.navBarWrapper p:hover {
+  transform: scale(1.05);
+}
+
+.navBarWrapper p.isLoading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.logoImg {
+  margin-top: 5px;
+  width: 50px;
+}

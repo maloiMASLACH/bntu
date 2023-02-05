@@ -1,0 +1,41 @@
+.signUpWrapper {
+  margin: auto;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 50%;
+}
+.signUpFIO {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.signUpFIO div {
+  width: 100%;
+}
+
+.signUpDescription {
+  color: var(--global-text);
+  font-weight: 800;
+  margin: 0 auto;
+  font-size: xx-large;
+}
+
+.signUpWrapper button {
+  margin: 20px 0 !important;
+}
+
+.signUpWrapper input {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+  margin: 8px 0 0 0 !important;
+  color: var(--global-text);
+}
+.signUpLoader{
+  width: 30px;
+  margin-left: -50px;
+  margin-right: 20px;
+}

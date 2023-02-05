@@ -1,0 +1,8 @@
+.adminTable {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 530px;
+    width: 80%;
+    margin: 0 auto;
+}

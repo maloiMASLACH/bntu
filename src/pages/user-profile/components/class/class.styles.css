@@ -1,0 +1,78 @@
+
+.profileClass {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profileClass .blockWrapper {
+  width: 100%;
+  height: 200px;
+  border: 2px solid transparent;
+  border-top: 5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  transition: 0.5s;
+  gap: 20px;
+
+  color: var(--global-text);
+}
+
+.profileClass .blockWrapper:hover {
+  border: 2px solid var(--global-text);
+  border-top: 5px solid var(--global-text);
+  border-bottom: 5px solid var(--global-text);
+}
+
+.profileClass .blockWrapper .classImg {
+  width: -webkit-fill-available;
+  max-width: 200px;
+  height: 190px;
+  background-size: cover;
+  border-radius: 12px;
+}
+
+.profileClass .blockWrapper .shortInfo {
+  width: -webkit-fill-available;
+  max-width: calc(100% - 250px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.profileClass .blockWrapper .shortInfo p {
+  text-align: start;
+  font-size: xx-large;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--global-text);
+  font-weight: 700;
+}
+
+.profileClass .blockWrapper .shortInfo .addedInfo {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profileClass .blockWrapper .shortInfo .addedInfo p {
+  position: relative;
+  margin: 0;
+  font-size: medium;
+}
+
+.profileClass .blockWrapper .shortInfo .addedInfo .link {
+  transition: 0.5s;
+}
+
+.profileClass .blockWrapper .shortInfo .addedInfo .link:hover {
+  transform: scale3d(1.05, 1, 1);
+  opacity: 0.7;
+}

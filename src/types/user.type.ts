@@ -8,4 +8,5 @@ export interface UserDto {
   email: string;
   group: string;
   faculty: UnitDto;
+  avatar: string;
 }

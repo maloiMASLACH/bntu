@@ -16,13 +16,14 @@ import themes from "./constants/themes";
 import { ActiveUserType, AuthUserContext } from "./context";
 import {
   AdminPage,
+  ClassPage,
   LandingPage,
   SignInPage,
   SignUpPage,
   UnitPage,
   UserProfilePage,
 } from "./pages";
-import { FirebaseContext, fetchURLInfo, useModal } from "./utils";
+import { FirebaseContext, fetchURLInfo } from "./utils";
 
 export const ScrollToTop: React.FC = memo(() => {
   const { pathname } = useLocation();
@@ -62,24 +63,19 @@ const App = () => {
           <Route element={<LandingPage />} path={RouterLinks.Landing} />
           <Route element={<SignInPage />} path={RouterLinks.SingIn} />
           <Route element={<SignUpPage />} path={RouterLinks.SingUp} />
-          <Route element={<AdminPage isAdmin={!!user?.isAdmin} />} path={RouterLinks.Admin} />
+          <Route
+            element={<AdminPage isAdmin={!!user?.isAdmin} />}
+            path={RouterLinks.Admin}
+          />
           <Route element={<UnitPage />} path={`${RouterLinks.Unit}/:unit`} />
           <Route
             element={<UserProfilePage />}
             path={`${RouterLinks.User}/:id`}
           />
-          {/*
-          <Route element={<ErrorPage />} path="*" />
-          <Route element={<SingInForm />} path={RouterLinks.SingIn} />
-          <Route element={<SingUpForm />} path={RouterLinks.SingUp} />
-          <Route element={<AppPage />} path={`${RouterLinks.App}/:uid`} />
           <Route
-            element={<UserPage handleTheme={handleTheme} />}
-            path={RouterLinks.UserPage}
+            element={<ClassPage />}
+            path={`${RouterLinks.Class}/:classId`}
           />
-          <Route element={<PasswordForget />} path={RouterLinks.PassForget} />
-          <Route element={<PasswordReset />} path={RouterLinks.PassReset} />
-          <Route element={<AdminPage />} path={RouterLinks.Admin} /> */}
         </Routes>
       </AuthUserContext.Provider>
     </BrowserRouter>

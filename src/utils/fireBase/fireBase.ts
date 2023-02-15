@@ -53,6 +53,22 @@ class Firebase {
     this.db.ref(`class/${id}`).update({ classData });
 
   classes = () => this.db.ref(`class`);
+
+  class = (id: string) => this.db.ref(`class/${id}/classData`);
+
+  classUsers = (id: string) => this.db.ref(`class/${id}/users`);
+
+  userClasses = (uid: string) => this.db.ref(`users/${uid}/classes`);
+
+  registerToClass = async (classId: string, userId: string) => {
+    await this.db.ref(`class/${classId}/users/${userId}`).set(userId);
+    await this.db.ref(`users/${userId}/classes/${classId}`).set(classId);
+  };
+
+  unregisterToClass = async (classId: string, userId: string) => {
+    await this.db.ref(`class/${classId}/users/${userId}`).remove();
+    await this.db.ref(`users/${userId}/classes/${classId}`).remove();
+  };
 }
 
 export default Firebase;

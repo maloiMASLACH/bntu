@@ -62,6 +62,7 @@ export const SignUpPage: React.FC = () => {
               lastName: data.lastName,
               group: data.group,
               faculty: units[data.faculty],
+              avatar: "",
             })
             .catch((e) => {
               setError(e.message);

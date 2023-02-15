@@ -1,0 +1,55 @@
+.classPageWrapper {
+  margin: 50px auto;
+  width: 85%;
+}
+
+.classPageWrapper .classTitle {
+  font-weight: 600;
+  color: var(--global-text);
+}
+
+.classPageWrapper .classContent {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.classPageWrapper .classImg {
+  width: 600px;
+  height: 600px;
+  background-size: cover;
+  border-radius: 50px;
+}
+
+.classPageWrapper .classInfo {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 650px);
+  gap: 20px;
+}
+
+.classPageWrapper .classInfo p {
+  color: var(--global-text);
+  margin: 0;
+}
+
+.classPageWrapper .classInfo .option {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.classPageWrapper .classInfo .option .title {
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.classPageWrapper .classInfo .buttonsWrapper{
+  display: flex;
+  gap: 20px;
+}
+
+.classPageWrapper .classInfo .buttonsWrapper button{
+  width: 100%;
+}

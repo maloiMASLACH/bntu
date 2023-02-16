@@ -1,0 +1,13 @@
+.classListFilterWrapper {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.classListFilterWrapper input {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+  margin: 8px 0 0 0 !important;
+  color: var(--global-text);
+}

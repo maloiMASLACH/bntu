@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RouterLinks } from "../../../../constants";
+import { ClassBlock } from "../../../../shared";
 import { ClassDto } from "../../../../types";
 import { FirebaseContext } from "../../../../utils";
 import { ClassesResponseType } from "./top-classes.model";
@@ -14,8 +15,8 @@ export const TopClasses: React.FC = () => {
 
   const [classes, setClasses] = useState<ClassDto[]>([]);
 
-  const handleGoToClass = (id: string) => {
-    navigate(`../${RouterLinks.Class}/${id}`);
+  const handleGoToClassesList = () => {
+    navigate(`../${RouterLinks.Classes}`);
   };
 
   useEffect(() => {
@@ -36,27 +37,14 @@ export const TopClasses: React.FC = () => {
     <div className="topClassesWrapper">
       <h1 className="title">Кружки</h1>
       <div className="listWrapper">
-        {classes.map(({ id, name, img, date, place }) => (
-          <div key={id} className="blockWrapper">
-            <div
-              className="classImg"
-              style={{ background: `url(${img}) no-repeat center/100%` }}
-            />
-            <div className="shortInfo">
-              <p className="">{name}</p>
-              <div className="addedInfo">
-                <p>{`Время: ${date}`}</p>
-                <p>{`Место: ${place}`}</p>
-                <p className="link" onClick={() => handleGoToClass(id)}>
-                  Узнать больше
-                  {" "}
-                  <i className="fa fa-arrow-right" aria-hidden="true" />
-                </p>
-              </div>
-            </div>
-          </div>
+        {classes.map((classData) => (
+          <ClassBlock key={classData.id} classData={classData} />
         ))}
-        <Button variant="contained" color="success">
+        <Button
+          onClick={handleGoToClassesList}
+          variant="contained"
+          color="success"
+        >
           Показать все
         </Button>
       </div>

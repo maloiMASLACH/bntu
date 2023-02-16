@@ -5,3 +5,4 @@ export * from "./sign-up";
 export * from "./user-profile";
 export * from "./admin";
 export * from "./class";
+export * from "./classes-list/classes-list.component";

@@ -1,0 +1,14 @@
+.classesListWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin: 4vh auto;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.classesListWrapper .title{
+  color: var(--global-text);
+  font-weight: 700;
+  margin: 0;
+}

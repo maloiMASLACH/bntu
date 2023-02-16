@@ -16,6 +16,7 @@ import themes from "./constants/themes";
 import { ActiveUserType, AuthUserContext } from "./context";
 import {
   AdminPage,
+  ClassesPage,
   ClassPage,
   LandingPage,
   SignInPage,
@@ -63,6 +64,7 @@ const App = () => {
           <Route element={<LandingPage />} path={RouterLinks.Landing} />
           <Route element={<SignInPage />} path={RouterLinks.SingIn} />
           <Route element={<SignUpPage />} path={RouterLinks.SingUp} />
+          <Route element={<ClassesPage />} path={RouterLinks.Classes} />
           <Route
             element={<AdminPage isAdmin={!!user?.isAdmin} />}
             path={RouterLinks.Admin}

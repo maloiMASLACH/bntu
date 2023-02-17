@@ -1,0 +1,11 @@
+.classUserTable {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 530px;
+    margin: 0 auto;
+}
+
+.classUserTable h3 {
+    color: var(--global-text);
+}

@@ -9,6 +9,7 @@ import {
   ClassMasterBlock,
   ClassRegisterBlock,
   ClassUnRegisterBlock,
+  UsersList,
 } from "./components";
 
 export const ClassPage: React.FC = () => {
@@ -85,6 +86,9 @@ export const ClassPage: React.FC = () => {
               )}
             </div>
           </div>
+          {classData.masterId === activeUser?.userId && classUsers && (
+            <UsersList users={classUsers} />
+          )}
         </>
       )}
     </div>

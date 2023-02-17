@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { RouterLinks } from "../../constants";
 import { ClassDto, UnitDto, UserDto } from "../../types";
-import { FirebaseContext } from "../../utils";
+import { FirebaseContext, useModal } from "../../utils";
 import {
   AdminPageProps,
   ClassesResponseType,
@@ -34,6 +34,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
   const [units, setUnits] = useState<UnitDto[]>();
   const [users, setUsers] = useState<UserDto[]>();
   const [classes, setClasses] = useState<ClassDto[]>();
+  const [isChanged, toggleChanged] = useModal(false);
 
   useEffect(() => {
     let isCancelled = false;
@@ -72,7 +73,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [isChanged]);
 
   return (
     <div className="pageWrapper">
@@ -82,7 +83,13 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
           {units && <UnitsList units={units} />}
           {classes && <ClassesList classes={classes} />}
 
-          {users && units && <CreateNewClass users={users} units={units} />}
+          {users && units && (
+            <CreateNewClass
+              users={users}
+              units={units}
+              handleChange={toggleChanged}
+            />
+          )}
         </>
       )}
     </div>

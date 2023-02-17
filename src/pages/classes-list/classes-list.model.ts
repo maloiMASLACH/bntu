@@ -3,8 +3,13 @@ import { ClassDto } from "../../types";
 export interface ClassesRequestResponse {
   [key: string]: {
     classData: ClassDto;
-    users: { [key: string]: string };
+    users?: { [key: string]: string };
   };
+}
+
+export interface ClassesDataType {
+  classData: ClassDto;
+  users?: { [key: string]: string };
 }
 
 export interface ClassesFilterType {

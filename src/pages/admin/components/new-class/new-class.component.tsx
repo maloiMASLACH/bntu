@@ -27,6 +27,7 @@ import "./new-class.styles.css";
 
 const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
   handleClose,
+  handleChange,
   users,
   units,
 }) => {
@@ -69,6 +70,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
       })
       .then(() => {
         toggleSuccess();
+        handleChange();
       })
       .catch((e) => {
         setError(e.message);
@@ -237,6 +239,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
 export const CreateNewClass: React.FC<CreateNewClassProps> = ({
   units,
   users,
+  handleChange,
 }) => {
   const [isCreating, toggleCreating] = useModal(false);
 
@@ -255,6 +258,7 @@ export const CreateNewClass: React.FC<CreateNewClassProps> = ({
       {isCreating && (
         <CreateNewClassForm
           handleClose={toggleCreating}
+          handleChange={handleChange}
           users={users}
           units={units}
         />

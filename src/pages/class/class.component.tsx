@@ -6,6 +6,7 @@ import { ClassDto } from "../../types";
 import { FirebaseContext, useModal } from "../../utils";
 import "./class.styles.css";
 import {
+  ClassDeleteBlock,
   ClassMasterBlock,
   ClassRegisterBlock,
   ClassUnRegisterBlock,
@@ -78,6 +79,13 @@ export const ClassPage: React.FC = () => {
                     />
                   ) : (
                     <ClassRegisterBlock
+                      toggleSuccess={toggleProcessed}
+                      classId={classData.id}
+                    />
+                  )}
+
+                  {classData.masterId === activeUser?.userId && classUsers && (
+                    <ClassDeleteBlock
                       toggleSuccess={toggleProcessed}
                       classId={classData.id}
                     />

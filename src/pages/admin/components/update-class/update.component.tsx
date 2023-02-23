@@ -18,23 +18,22 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AlertWindow } from "../../../../shared";
 import { FirebaseContext, useModal } from "../../../../utils";
-import {
-  CreateFormType,
-  CreateNewClassFormProps,
-  CreateNewClassProps,
-} from "./new-class.model";
-import "./new-class.styles.css";
+import { UpdateFormType, UpdateClassFormProps } from "./update.model";
+import "./update.styles.css";
 
-const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
+export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   handleClose,
   handleChange,
   users,
   units,
   places,
+  classData,
 }) => {
   const [isLoading, toggleLoading] = useModal(false);
   const [isSuccess, toggleSuccess] = useModal(false);
-  const [addedUnits, setAddedUnits] = useState<string[]>([]);
+  const [addedUnits, setAddedUnits] = useState<string[]>(
+    Object.values(classData.units)
+  );
 
   const [errorMessage, setError] = useState("");
 
@@ -46,7 +45,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateFormType>({});
+  } = useForm<UpdateFormType>({});
 
   const handleClearErrorMessage = () => {
     setError("");
@@ -59,17 +58,15 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     setAddedUnits(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleFormSubmit = (data: CreateFormType) => {
+  const handleFormSubmit = (data: UpdateFormType) => {
     toggleLoading();
-
-    const uniqId = Math.random().toString(16).slice(2);
 
     const dateFormatted = new Date(data.date).toLocaleString();
 
     firebase
-      .createClass(uniqId, {
+      .createClass(classData.id, {
         ...data,
-        id: uniqId,
+        id: classData.id,
         date: dateFormatted,
       })
       .then(() => {
@@ -84,14 +81,15 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
 
   return (
     <Dialog open onClose={handleClose}>
-      <DialogTitle>Создать новое занятие</DialogTitle>
+      <DialogTitle>Редактировать занятие</DialogTitle>
       <DialogContent>
-        <div className="createClassFormWrapper">
+        <div className="updateClassFormWrapper">
           <TextField
             color="success"
             id="name-basic"
             error={!!errors.name}
             label="Название"
+            defaultValue={classData.name}
             variant="outlined"
             helperText={errors.name ? errors.name.message : "Название кружка"}
             {...register("name", {
@@ -103,6 +101,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             id="description-basic"
             error={!!errors.description}
             label="Описание"
+            defaultValue={classData.description}
             multiline
             minRows={3}
             variant="outlined"
@@ -121,6 +120,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             id="img-basic"
             error={!!errors.img}
             label="Изображение"
+            defaultValue={classData.img}
             variant="outlined"
             helperText={
               errors.img ? errors.img.message : "Ссылка на изображение"
@@ -135,6 +135,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             <Select
               id="master-select"
               label="Преподователь"
+              defaultValue={classData.masterId}
               {...register("masterId", {
                 required: { value: true, message: "Поле обязательно" },
               })}
@@ -185,6 +186,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             <Select
               id="place-select"
               label="Место"
+              defaultValue={classData.place}
               {...register("place", {
                 required: { value: true, message: "Поле обязательно" },
               })}
@@ -231,7 +233,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
       {isSuccess && (
         <AlertWindow
           toggleClose={handleClose}
-          message="Вы успешно создали занятие"
+          message="Вы успешно обновили занятие"
         />
       )}
       {!!errorMessage.length && (
@@ -241,38 +243,5 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
         />
       )}
     </Dialog>
-  );
-};
-
-export const CreateNewClass: React.FC<CreateNewClassProps> = ({
-  units,
-  users,
-  places,
-  handleChange,
-}) => {
-  const [isCreating, toggleCreating] = useModal(false);
-
-  return (
-    <div className="adminButtons">
-      <Button
-        color="success"
-        variant="contained"
-        type="button"
-        fullWidth
-        onClick={toggleCreating}
-      >
-        Создать новое занатие
-      </Button>
-
-      {isCreating && (
-        <CreateNewClassForm
-          handleClose={toggleCreating}
-          handleChange={handleChange}
-          users={users}
-          units={units}
-          places={places}
-        />
-      )}
-    </div>
   );
 };

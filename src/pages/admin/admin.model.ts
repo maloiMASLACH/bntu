@@ -1,4 +1,6 @@
-import { ClassDto, UnitDto, UserDto } from "../../types";
+import {
+  ClassDto, PlaceDto, UnitDto, UserDto
+} from "../../types";
 
 export interface AdminPageProps {
   isAdmin: boolean;
@@ -22,4 +24,8 @@ export interface ClassesResponseType {
 
 interface ClassDataType {
   classData: ClassDto;
+}
+
+export interface PlaceResponseType {
+  [key: string]: PlaceDto;
 }

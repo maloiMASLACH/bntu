@@ -1,14 +1,16 @@
-import { UnitDto, UserDto } from "../../../../types";
+import { PlaceDto, UnitDto, UserDto } from "../../../../types";
 
 export interface CreateNewClassProps {
   units: UnitDto[];
   users: UserDto[];
+  places: PlaceDto[];
   handleChange: () => void;
 }
 
 export interface CreateNewClassFormProps {
   handleClose: () => void;
   handleChange: () => void;
+  places: PlaceDto[];
   units: UnitDto[];
   users: UserDto[];
 }

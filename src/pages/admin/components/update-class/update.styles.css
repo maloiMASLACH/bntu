@@ -1,0 +1,23 @@
+.updateClassFormWrapper {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+
+.updateClassFormWrapper input {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+  margin: 8px 0 0 0 !important;
+  color: var(--global-text);
+}
+
+.updateClassFormWrapper input[type="datetime-local"] {
+  border-bottom: none !important;
+  box-shadow: none !important;
+  padding: 0 10px !important;
+  margin: 0px 0 0 0 !important;
+  color: var(--global-text);
+}

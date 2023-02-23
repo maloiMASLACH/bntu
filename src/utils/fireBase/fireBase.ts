@@ -1,4 +1,13 @@
+import {
+  FirebaseStorage,
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import app from "firebase/compat/app";
+// import storage from "firebase/compat/storage";
+// import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import "firebase/compat/auth";
 import "firebase/compat/database";
 import { ClassDto, UserDto } from "../../types";
@@ -15,11 +24,14 @@ const config = {
 class Firebase {
   auth: app.auth.Auth;
 
+  storage: FirebaseStorage;
+
   db: app.database.Database;
 
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    this.storage = getStorage();
     this.db = app.database();
   }
 
@@ -60,6 +72,16 @@ class Firebase {
 
   userClasses = (uid: string) => this.db.ref(`users/${uid}/classes`);
 
+  deleteClass = async (classId: string) =>
+    this.db.ref(`class/${classId}`).remove();
+
+  places = () => this.db.ref(`places`);
+
+  createPlace = (building: string, auditory: string) =>
+    this.db
+      .ref(`places/k${building}a${auditory}`)
+      .update({ id: `k${building}a${auditory}`, building, auditory });
+
   registerToClass = async (classId: string, userId: string) => {
     await this.db.ref(`class/${classId}/users/${userId}`).set(userId);
     await this.db.ref(`users/${userId}/classes/${classId}`).set(classId);
@@ -68,6 +90,14 @@ class Firebase {
   unregisterToClass = async (classId: string, userId: string) => {
     await this.db.ref(`class/${classId}/users/${userId}`).remove();
     await this.db.ref(`users/${userId}/classes/${classId}`).remove();
+  };
+
+  uploadFile = async () => {
+    console.log(this.db);
+    const file = await getDownloadURL(ref(this.storage, "test.png"));
+
+    console.log(file);
+    // console.log(this.storageAPI);
   };
 }
 

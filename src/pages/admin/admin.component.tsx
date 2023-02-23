@@ -1,12 +1,14 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { RouterLinks } from "../../constants";
-import { ClassDto, UnitDto, UserDto } from "../../types";
+import { ClassDto, PlaceDto, UnitDto, UserDto } from "../../types";
 import { FirebaseContext, useModal } from "../../utils";
 import {
   AdminPageProps,
   ClassesResponseType,
+  PlaceResponseType,
   UnitsResponseType,
   UsersResponseType,
 } from "./admin.model";
@@ -14,6 +16,8 @@ import "./admin.styles.css";
 import {
   ClassesList,
   CreateNewClass,
+  CreateNewPlace,
+  PlacesList,
   UnitsList,
   UsersList,
 } from "./components";
@@ -34,6 +38,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
   const [units, setUnits] = useState<UnitDto[]>();
   const [users, setUsers] = useState<UserDto[]>();
   const [classes, setClasses] = useState<ClassDto[]>();
+  const [places, setPlaces] = useState<PlaceDto[]>();
   const [isChanged, toggleChanged] = useModal(false);
 
   useEffect(() => {
@@ -70,6 +75,12 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
       );
     });
 
+    firebase.places().once("value", (snapshot) => {
+      const response: PlaceResponseType = snapshot.val();
+
+      setPlaces(Object.values(response || {}));
+    });
+
     return () => {
       isCancelled = true;
     };
@@ -81,12 +92,25 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
         <>
           {users && <UsersList users={users} />}
           {units && <UnitsList units={units} />}
-          {classes && <ClassesList classes={classes} />}
 
-          {users && units && (
+          {places && <PlacesList places={places} />}
+          <CreateNewPlace handleChange={toggleChanged} />
+
+          {users && units && places && classes && (
+            <ClassesList
+              classes={classes}
+              users={users}
+              units={units}
+              handleChange={toggleChanged}
+              places={places}
+            />
+          )}
+
+          {users && units && places && (
             <CreateNewClass
               users={users}
               units={units}
+              places={places}
               handleChange={toggleChanged}
             />
           )}

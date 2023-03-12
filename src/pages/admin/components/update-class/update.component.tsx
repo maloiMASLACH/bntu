@@ -32,7 +32,9 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   const [isLoading, toggleLoading] = useModal(false);
   const [isSuccess, toggleSuccess] = useModal(false);
   const [addedUnits, setAddedUnits] = useState<string[]>(
-    Object.values(classData.units)
+    typeof classData.units.length === "object"
+      ? classData.units
+      : [`${classData.units}`]
   );
 
   const [errorMessage, setError] = useState("");
@@ -45,7 +47,10 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<UpdateFormType>({});
+
+  const fileValue = watch("img");
 
   const handleClearErrorMessage = () => {
     setError("");
@@ -58,16 +63,24 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
     setAddedUnits(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleFormSubmit = (data: UpdateFormType) => {
+  const handleFormSubmit = async (data: UpdateFormType) => {
     toggleLoading();
 
-    const dateFormatted = new Date(data.date).toLocaleString();
+    const dateFormatted = data.date
+      ? new Date(data.date).toLocaleString()
+      : classData.date;
+
+    const url = data.img.length
+      ? await firebase.uploadFile("class", data.img[0], classData.id)
+      : classData.img;
 
     firebase
       .createClass(classData.id, {
         ...data,
+        img: `${url}`,
         id: classData.id,
         date: dateFormatted,
+        units: data.units,
       })
       .then(() => {
         toggleSuccess();
@@ -82,7 +95,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   return (
     <Dialog open onClose={handleClose}>
       <DialogTitle>Редактировать занятие</DialogTitle>
-      <DialogContent>
+      <DialogContent className="updateClassDialogWrapper">
         <div className="updateClassFormWrapper">
           <TextField
             color="success"
@@ -119,16 +132,20 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
             color="success"
             id="img-basic"
             error={!!errors.img}
-            label="Изображение"
-            defaultValue={classData.img}
             variant="outlined"
+            type="file"
             helperText={
               errors.img ? errors.img.message : "Ссылка на изображение"
             }
             {...register("img", {
-              required: { value: true, message: "Поле обязательно" },
+              required: { value: false, message: "Поле обязательно" },
             })}
           />
+          {fileValue && fileValue[0] ? (
+            <p className="fileName">{fileValue[0].name}</p>
+          ) : (
+            <p className="fileName">{classData.img}</p>
+          )}
 
           <FormControl fullWidth error={!!errors.masterId} color="success">
             <InputLabel id="select-masterId">Преподователь</InputLabel>
@@ -210,7 +227,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
             variant="outlined"
             helperText={errors.date ? errors.date.message : "Дата проведения"}
             {...register("date", {
-              required: { value: true, message: "Поле обязательно" },
+              required: { value: false, message: "Поле обязательно" },
             })}
           />
         </div>

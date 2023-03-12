@@ -46,11 +46,14 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<CreateFormType>({});
 
   const handleClearErrorMessage = () => {
     setError("");
   };
+
+  const fileValue = watch("img");
 
   const handleAddUnits = (event: SelectChangeEvent<typeof addedUnits>) => {
     const {
@@ -59,16 +62,17 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     setAddedUnits(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleFormSubmit = (data: CreateFormType) => {
+  const handleFormSubmit = async (data: CreateFormType) => {
     toggleLoading();
-
     const uniqId = Math.random().toString(16).slice(2);
-
     const dateFormatted = new Date(data.date).toLocaleString();
+
+    const url = await firebase.uploadFile("class", data.img[0], uniqId);
 
     firebase
       .createClass(uniqId, {
         ...data,
+        img: `${url}`,
         id: uniqId,
         date: dateFormatted,
       })
@@ -85,7 +89,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
   return (
     <Dialog open onClose={handleClose}>
       <DialogTitle>Создать новое занятие</DialogTitle>
-      <DialogContent>
+      <DialogContent className="createClassDialogWrapper">
         <div className="createClassFormWrapper">
           <TextField
             color="success"
@@ -122,6 +126,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             error={!!errors.img}
             label="Изображение"
             variant="outlined"
+            type="file"
             helperText={
               errors.img ? errors.img.message : "Ссылка на изображение"
             }
@@ -129,6 +134,9 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
               required: { value: true, message: "Поле обязательно" },
             })}
           />
+          {fileValue && fileValue[0] && (
+            <p className="fileName">{fileValue[0].name}</p>
+          )}
 
           <FormControl fullWidth error={!!errors.masterId} color="success">
             <InputLabel id="select-masterId">Преподователь</InputLabel>

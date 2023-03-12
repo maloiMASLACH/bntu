@@ -27,6 +27,7 @@ export const ClassDeleteBlock: React.FC<ClassDeleteProps> = ({ classId }) => {
       toggleLoading();
       firebase
         .deleteClass(classId)
+        .then(() => firebase.deleteFile("class", classId))
         .then(() => {
           toggleLoading();
           toggleOpen();

@@ -18,5 +18,5 @@ export interface UpdateFormType {
   units: string[];
   place: string;
   date: string;
-  img: string;
+  img: FileList;
 }

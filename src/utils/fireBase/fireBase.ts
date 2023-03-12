@@ -3,7 +3,8 @@ import {
   getStorage,
   ref,
   getDownloadURL,
-  uploadBytesResumable,
+  uploadBytes,
+  deleteObject,
 } from "firebase/storage";
 import app from "firebase/compat/app";
 // import storage from "firebase/compat/storage";
@@ -92,12 +93,22 @@ class Firebase {
     await this.db.ref(`users/${userId}/classes/${classId}`).remove();
   };
 
-  uploadFile = async () => {
-    console.log(this.db);
-    const file = await getDownloadURL(ref(this.storage, "test.png"));
+  getFile = async () => getDownloadURL(ref(this.storage, "test.png"));
 
-    console.log(file);
-    // console.log(this.storageAPI);
+  uploadFile = async (fileFolder: string, file: File, id: string) => {
+    let url;
+
+    const storageRef = await ref(this.storage, `${fileFolder}/${id}`);
+    await uploadBytes(storageRef, file).then(async (snapshot) => {
+      url = await getDownloadURL(ref(this.storage, snapshot.ref.fullPath));
+    });
+
+    return url;
+  };
+
+  deleteFile = async (fileFolder: string, id: string) => {
+    const storageRef = await ref(this.storage, `${fileFolder}/${id}`);
+    await deleteObject(storageRef);
   };
 }
 

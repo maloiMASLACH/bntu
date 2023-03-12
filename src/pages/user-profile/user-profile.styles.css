@@ -21,6 +21,33 @@
   background: linear-gradient(var(--global-text), var(--global-nav-bar-color));
 }
 
+.userProfileWrapper .avatarWrapper label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.imgInput {
+  display: none;
+  width: 200px;
+  height: 200px;
+}
+
+.avatar {
+  margin: auto auto auto auto;
+  width: 195px;
+  height: 195px;
+  border-radius: 50%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+}
+
 .userProfileWrapper .shortInfo {
   margin: 0 auto;
   display: flex;

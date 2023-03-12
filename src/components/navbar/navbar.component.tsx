@@ -14,8 +14,7 @@ export const NavBar: React.FC<NavBarProps> = ({ isAdmin, userId }) => {
   const firebase = useContext(FirebaseContext);
 
   const handleGoHome = async () => {
-    // navigate("../");
-    console.log(await firebase.getFile());
+    navigate("../");
   };
 
   const handleGoSignIn = () => {

@@ -91,7 +91,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ isAdmin }) => {
       {isAdmin && (
         <>
           {users && <UsersList users={users} />}
-          {units && <UnitsList units={units} />}
+          {units && <UnitsList units={units} handleChange={toggleChanged} />}
 
           {places && <PlacesList places={places} />}
           <CreateNewPlace handleChange={toggleChanged} />

@@ -5,3 +5,4 @@ export * from "./classes";
 export * from "./places";
 export * from "./new-place";
 export * from "./update-class";
+export * from "./update-unit";

@@ -11,7 +11,7 @@ import app from "firebase/compat/app";
 // import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import "firebase/compat/auth";
 import "firebase/compat/database";
-import { ClassDto, UserDto } from "../../types";
+import { ClassDto, UnitDto, UserDto } from "../../types";
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -50,6 +50,9 @@ class Firebase {
     this.auth.currentUser!.updatePassword(password);
 
   unit = (unitID: string) => this.db.ref(`units/${unitID}`);
+
+  updateUnit = (id: string, classData: UnitDto) =>
+    this.db.ref(`units/${id}`).update(classData);
 
   units = () => this.db.ref("units");
 

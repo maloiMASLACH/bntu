@@ -96,7 +96,7 @@ class Firebase {
     await this.db.ref(`users/${userId}/classes/${classId}`).remove();
   };
 
-  getFile = async () => getDownloadURL(ref(this.storage, "test.png"));
+  getFile = async (fileFolder: string, id: string) => getDownloadURL(ref(this.storage, `${fileFolder}/${id}`));
 
   uploadFile = async (fileFolder: string, file: File, id: string) => {
     let url;

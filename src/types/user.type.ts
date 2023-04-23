@@ -9,4 +9,5 @@ export interface UserDto {
   group: string;
   faculty: UnitDto;
   avatar: string;
+  number: string;
 }

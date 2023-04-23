@@ -63,6 +63,7 @@ export const SignUpPage: React.FC = () => {
               group: data.group,
               faculty: units[data.faculty],
               avatar: "",
+              number: data.number
             })
             .catch((e) => {
               setError(e.message);
@@ -135,6 +136,33 @@ export const SignUpPage: React.FC = () => {
           required: { value: true, message: "Поле обязательно" },
           pattern: {
             value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
+            message: "Не корретный формат",
+          },
+        })}
+      />
+
+      <TextField
+        color="success"
+        id="phone-basic"
+        error={!!errors.number}
+        label="Телефон"
+        type="tel"
+        variant="outlined"
+        helperText={
+            errors.number ? errors.number.message : "Ваш номер телефона"
+          }
+        {...register("number", {
+          required: { value: true, message: "Поле обязательно" },
+          minLength: {
+            value: 13,
+            message: "Не корретный формат",
+          },
+          maxLength: {
+            value: 13,
+            message: "Не корретный формат",
+          },
+          pattern: {
+            value: /[+0-9]$/,
             message: "Не корретный формат",
           },
         })}

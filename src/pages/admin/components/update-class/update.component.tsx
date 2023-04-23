@@ -31,11 +31,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
 }) => {
   const [isLoading, toggleLoading] = useModal(false);
   const [isSuccess, toggleSuccess] = useModal(false);
-  const [addedUnits, setAddedUnits] = useState<string[]>(
-    typeof classData.units.length === "object"
-      ? classData.units
-      : [`${classData.units}`]
-  );
+  const [addedUnits, setAddedUnits] = useState<string[]>(classData.units);
 
   const [errorMessage, setError] = useState("");
 
@@ -46,6 +42,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     watch,
   } = useForm<UpdateFormType>({});
@@ -60,7 +57,18 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
     const {
       target: { value },
     } = event;
-    setAddedUnits(typeof value === "string" ? value.split(",") : value);
+    if (value.includes('all')) {
+      if (addedUnits.length === units.length) {
+        setAddedUnits([]);
+        setValue("units", []);
+      } else {
+        setAddedUnits(units.map((unit) => unit.id));
+        setValue("units", units.map((unit) => unit.id));
+      }
+    } else {
+      setAddedUnits(typeof value === "string" ? value.split(",") : value);
+      setValue("units", typeof value === "string" ? value.split(",") : value);
+    }
   };
 
   const handleFormSubmit = async (data: UpdateFormType) => {
@@ -182,10 +190,13 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
                 required: { value: true, message: "Поле обязательно" },
               })}
               onChange={(e) => {
-                register("units").onChange(e);
                 handleAddUnits(e);
               }}
             >
+              <MenuItem value="all">
+                <Checkbox checked={addedUnits.length === units.length} />
+                <ListItemText primary="Выбрать все" />
+              </MenuItem>
               {units.map((unit) => (
                 <MenuItem value={unit.id}>
                   <Checkbox checked={addedUnits.includes(unit.id)} />

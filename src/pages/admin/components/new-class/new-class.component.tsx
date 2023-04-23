@@ -46,6 +46,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch,
   } = useForm<CreateFormType>({});
 
@@ -59,7 +60,18 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
     const {
       target: { value },
     } = event;
-    setAddedUnits(typeof value === "string" ? value.split(",") : value);
+    if (value.includes('all')) {
+      if (addedUnits.length === units.length) {
+        setAddedUnits([]);
+        setValue("units", []);
+      } else {
+        setAddedUnits(units.map((unit) => unit.id));
+        setValue("units", units.map((unit) => unit.id));
+      }
+    } else {
+      setAddedUnits(typeof value === "string" ? value.split(",") : value);
+      setValue("units", typeof value === "string" ? value.split(",") : value);
+    }
   };
 
   const handleFormSubmit = async (data: CreateFormType) => {
@@ -172,16 +184,21 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
                 required: { value: true, message: "Поле обязательно" },
               })}
               onChange={(e) => {
-                register("units").onChange(e);
                 handleAddUnits(e);
               }}
             >
+
+              <MenuItem value="all">
+                <Checkbox checked={addedUnits.length === units.length} />
+                <ListItemText primary="Выбрать все" />
+              </MenuItem>
               {units.map((unit) => (
                 <MenuItem value={unit.id}>
                   <Checkbox checked={addedUnits.includes(unit.id)} />
                   <ListItemText primary={unit.name} />
                 </MenuItem>
               ))}
+
             </Select>
             <FormHelperText>
               {errors.units ? errors.units.message : "Факультеты соучередители"}

@@ -43,7 +43,8 @@ export const UserProfilePage: React.FC = () => {
           .once("value", (snapshot) =>
             setClasses(Object.values(snapshot.val() || {}))
           )
-      );
+      ).then(() => firebase.getFile('avatar', `${id}`))
+      .then((avatar) => setImage(avatar));
   }, [isUpdated]);
 
   const handleGoFaculty = () => {

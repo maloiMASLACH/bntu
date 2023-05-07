@@ -34,6 +34,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   const [addedUnits, setAddedUnits] = useState<string[]>(classData.units);
 
   const [errorMessage, setError] = useState("");
+  const [errorDateMessage, setErrorDate] = useState("");
 
   const firebase = useContext(FirebaseContext);
 
@@ -48,6 +49,9 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   } = useForm<UpdateFormType>({});
 
   const fileValue = watch("img");
+  const dateTable = watch("date");
+  const dateString = watch("dateString");
+  const unitsWatch = watch("units");
 
   const handleClearErrorMessage = () => {
     setError("");
@@ -74,9 +78,9 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   const handleFormSubmit = async (data: UpdateFormType) => {
     toggleLoading();
 
-    const dateFormatted = data.date
+    const dateFormatted = (dateTable || dateString) ? dateTable
       ? new Date(data.date).toLocaleString()
-      : classData.date;
+      : dateString : classData.date;
 
     const url = data.img.length
       ? await firebase.uploadFile("class", data.img[0], classData.id)
@@ -88,7 +92,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
         img: `${url}`,
         id: classData.id,
         date: dateFormatted,
-        units: data.units,
+        units: addedUnits,
       })
       .then(() => {
         toggleSuccess();
@@ -234,11 +238,23 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
             color="success"
             id="date-basic"
             type="datetime-local"
-            error={!!errors.date}
+            error={!!errorDateMessage}
             variant="outlined"
-            helperText={errors.date ? errors.date.message : "Дата проведения"}
+            helperText={errorDateMessage || "Дата постоянного проведения"}
             {...register("date", {
-              required: { value: false, message: "Поле обязательно" },
+              required: { value: false, message: "Одно из полей обязательно" },
+            })}
+          />
+
+          <TextField
+            color="success"
+            id="date-string"
+            type="text"
+            error={!!errorDateMessage}
+            variant="outlined"
+            helperText={errorDateMessage || "Дата постоянного проведения"}
+            {...register("dateString", {
+              required: { value: false, message: "Одно из полей обязательно" },
             })}
           />
         </div>

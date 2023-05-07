@@ -22,5 +22,6 @@ export interface CreateFormType {
   units: string[];
   place: string;
   date: string;
+  dateString: string;
   img: FileList;
 }

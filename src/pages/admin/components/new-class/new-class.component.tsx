@@ -37,6 +37,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
   const [addedUnits, setAddedUnits] = useState<string[]>([]);
 
   const [errorMessage, setError] = useState("");
+  const [errorDateMessage, setErrorDate] = useState("");
 
   const firebase = useContext(FirebaseContext);
 
@@ -55,6 +56,8 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
   };
 
   const fileValue = watch("img");
+  const dateTable = watch("date");
+  const dateString = watch("dateString");
 
   const handleAddUnits = (event: SelectChangeEvent<typeof addedUnits>) => {
     const {
@@ -75,27 +78,32 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
   };
 
   const handleFormSubmit = async (data: CreateFormType) => {
-    toggleLoading();
-    const uniqId = Math.random().toString(16).slice(2);
-    const dateFormatted = new Date(data.date).toLocaleString();
+    if (dateTable || dateString) {
+      toggleLoading();
+      setErrorDate('');
+      const uniqId = Math.random().toString(16).slice(2);
+      const dateFormatted = dateTable ? new Date(data.date).toLocaleString() : dateString;
 
-    const url = await firebase.uploadFile("class", data.img[0], uniqId);
+      const url = await firebase.uploadFile("class", data.img[0], uniqId);
 
-    firebase
-      .createClass(uniqId, {
-        ...data,
-        img: `${url}`,
-        id: uniqId,
-        date: dateFormatted,
-      })
-      .then(() => {
-        toggleSuccess();
-        handleChange();
-      })
-      .catch((e) => {
-        setError(e.message);
-        toggleLoading();
-      });
+      firebase
+        .createClass(uniqId, {
+          ...data,
+          img: `${url}`,
+          id: uniqId,
+          date: dateFormatted,
+        })
+        .then(() => {
+          toggleSuccess();
+          handleChange();
+        })
+        .catch((e) => {
+          setError(e.message);
+          toggleLoading();
+        });
+    } else {
+      setErrorDate("Заполните одно из полей даты");
+    }
   };
 
   return (
@@ -229,13 +237,26 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             color="success"
             id="date-basic"
             type="datetime-local"
-            error={!!errors.date}
+            error={!!errorDateMessage}
             variant="outlined"
-            helperText={errors.date ? errors.date.message : "Дата проведения"}
+            helperText={errorDateMessage || "Дата разовго проведения"}
             {...register("date", {
-              required: { value: true, message: "Поле обязательно" },
+              required: { value: false, message: "Одно из полей обязательно" },
             })}
           />
+
+          <TextField
+            color="success"
+            id="date-string"
+            type="text"
+            error={!!errorDateMessage}
+            variant="outlined"
+            helperText={errorDateMessage || "Дата постоянного проведения"}
+            {...register("dateString", {
+              required: { value: false, message: "Одно из полей обязательно" },
+            })}
+          />
+
         </div>
       </DialogContent>
 

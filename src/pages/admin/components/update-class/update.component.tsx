@@ -51,7 +51,6 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
   const fileValue = watch("img");
   const dateTable = watch("date");
   const dateString = watch("dateString");
-  const unitsWatch = watch("units");
 
   const handleClearErrorMessage = () => {
     setError("");

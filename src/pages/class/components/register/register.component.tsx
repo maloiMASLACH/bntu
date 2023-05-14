@@ -28,8 +28,16 @@ export const ClassRegisterBlock: React.FC<ClassRegisterProps> = ({
   const [isOpen, toggleOpen] = useModal(false);
   const [isLoading, toggleLoading] = useModal(false);
 
+  const handleOpen = () => {
+    if (activeUser?.userId.length) {
+      toggleOpen();
+    } else {
+      navigate(`../${RouterLinks.SingIn}`);
+    }
+  };
+
   const handleRegister = () => {
-    if (activeUser) {
+    if (activeUser?.userId.length) {
       toggleLoading();
       firebase
         .registerToClass(classId, activeUser.userId)
@@ -53,7 +61,7 @@ export const ClassRegisterBlock: React.FC<ClassRegisterProps> = ({
 
   return (
     <>
-      <Button variant="contained" color="success" onClick={toggleOpen}>
+      <Button variant="contained" color="success" onClick={handleOpen}>
         Записаться
       </Button>
 

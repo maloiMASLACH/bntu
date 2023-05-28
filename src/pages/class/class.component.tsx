@@ -46,7 +46,7 @@ export const ClassPage: React.FC = () => {
             <div
               className="classImg"
               style={{
-                background: `url(${classData.img}) no-repeat center/100%`,
+                background: classData.img ? `url(${classData.img}) no-repeat center/100%` : 'var(--global-nav-bar-color)',
               }}
             />
             <div className="classInfo">
@@ -94,7 +94,7 @@ export const ClassPage: React.FC = () => {
               )}
             </div>
           </div>
-          {classData.masterId === activeUser?.userId && classUsers && (
+          {classData.masterId === activeUser?.userId && !!classUsers?.length && (
             <UsersList users={classUsers} />
           )}
         </>

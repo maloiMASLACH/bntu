@@ -22,7 +22,7 @@ export const UsersList: React.FC<UsersListProps> = ({ users }) => {
     },
     {
       field: "isAdmin",
-      headerName: "Преподователь",
+      headerName: "Преподаватель",
       flex: 100,
       renderCell: (value) => (value.value ? 'Да' : 'Нет')
     },

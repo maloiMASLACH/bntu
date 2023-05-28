@@ -40,7 +40,7 @@ export const ClassesPage: React.FC = () => {
               id: elem.userData.uid,
               facultyName: elem.userData.faculty.name,
               ...elem.userData,
-            }))
+            })).filter((user) => user.isAdmin === true)
           );
         });
       });

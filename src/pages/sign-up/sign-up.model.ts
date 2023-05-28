@@ -6,5 +6,5 @@ export interface SignUpType {
   firstName: string;
   lastName: string;
   faculty: number;
-  number: string;
+  number?: string;
 }

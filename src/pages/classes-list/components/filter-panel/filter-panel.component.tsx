@@ -43,10 +43,10 @@ export const ClassesFilterPanel: React.FC<FilterPanelProps> = ({
       />
       {masters && (
         <FormControl fullWidth error={!!errors.master} color="success">
-          <InputLabel id="select-masterId">Преподователь</InputLabel>
+          <InputLabel id="select-masterId">Преподаватель</InputLabel>
           <Select
             id="master-select"
-            label="Преподователь"
+            label="Преподаватель"
             defaultValue=""
             {...register("master")}
             onChange={(e) => {

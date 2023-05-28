@@ -33,7 +33,7 @@ export const ClassMasterBlock: React.FC<ClassMasterProps> = ({ masterId }) => {
             />
             {`${masterData?.firstName} ${masterData?.lastName}`}
           </div>
-          {`${masterData?.number}`}
+          {masterData?.number && masterData?.number}
         </>
       )}
     </p>

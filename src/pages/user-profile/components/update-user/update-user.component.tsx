@@ -65,6 +65,7 @@ const UpdateFormContent: React.FC<UpdateUserContentProps> = ({
         lastName: data.lastName,
         group: data.group,
         faculty: units[data.faculty],
+        number: data.number || ''
       })
       .then(() => {
         resultHandler();
@@ -132,6 +133,34 @@ const UpdateFormContent: React.FC<UpdateUserContentProps> = ({
               required: { value: true, message: "Поле обязательно" },
               pattern: {
                 value: /[0-9]$/,
+                message: "Не корретный формат",
+              },
+            })}
+          />
+
+          <TextField
+            color="success"
+            id="phone-basic"
+            error={!!errors.number}
+            defaultValue={userData.number}
+            label="Телефон"
+            type="tel"
+            variant="outlined"
+            helperText={
+            errors.number ? errors.number.message : "Ваш номер телефона"
+          }
+            {...register("number", {
+              required: { value: false, message: "Поле не обязательно" },
+              minLength: {
+                value: 13,
+                message: "Не корретный формат",
+              },
+              maxLength: {
+                value: 13,
+                message: "Не корретный формат",
+              },
+              pattern: {
+                value: /[+0-9]$/,
                 message: "Не корретный формат",
               },
             })}

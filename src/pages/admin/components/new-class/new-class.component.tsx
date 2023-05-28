@@ -84,12 +84,12 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
       const uniqId = Math.random().toString(16).slice(2);
       const dateFormatted = dateTable ? new Date(data.date).toLocaleString() : dateString;
 
-      const url = await firebase.uploadFile("class", data.img[0], uniqId);
+      const url = !!data.img.length && await firebase.uploadFile("class", data.img[0], uniqId);
 
       firebase
         .createClass(uniqId, {
           ...data,
-          img: `${url}`,
+          img: url || '',
           id: uniqId,
           date: dateFormatted,
         })
@@ -151,7 +151,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
               errors.img ? errors.img.message : "Ссылка на изображение"
             }
             {...register("img", {
-              required: { value: true, message: "Поле обязательно" },
+              required: { value: false, message: "Поле обязательно" },
             })}
           />
           {fileValue && fileValue[0] && (
@@ -159,10 +159,10 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
           )}
 
           <FormControl fullWidth error={!!errors.masterId} color="success">
-            <InputLabel id="select-masterId">Преподователь</InputLabel>
+            <InputLabel id="select-masterId">Преподаватель</InputLabel>
             <Select
               id="master-select"
-              label="Преподователь"
+              label="Преподаватель"
               {...register("masterId", {
                 required: { value: true, message: "Поле обязательно" },
               })}
@@ -176,7 +176,7 @@ const CreateNewClassForm: React.FC<CreateNewClassFormProps> = ({
             <FormHelperText>
               {errors.masterId
                 ? errors.masterId.message
-                : "Преподователь занятия"}
+                : "Преподаватель занятия"}
             </FormHelperText>
           </FormControl>
 

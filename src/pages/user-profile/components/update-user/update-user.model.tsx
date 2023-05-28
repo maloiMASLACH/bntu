@@ -18,4 +18,5 @@ export interface UpdateFormType {
   lastName: string;
   group: string;
   faculty: number;
+  number?: string;
 }

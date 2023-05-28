@@ -99,7 +99,7 @@ const CreateNewPlaceForm: React.FC<CreateNewPlaceFormProps> = ({
           color="success"
           disabled={isLoading}
         >
-          Зарегестировать
+          Зарегестрировать
         </Button>
       </DialogActions>
 
@@ -133,7 +133,7 @@ export const CreateNewPlace: React.FC<CreateNewPlaceProps> = ({
         fullWidth
         onClick={toggleCreating}
       >
-        Зарегестировать аудиторию
+        Зарегестрировать аудиторию
       </Button>
 
       {isCreating && (

@@ -63,7 +63,7 @@ export const SignUpPage: React.FC = () => {
               group: data.group,
               faculty: units[data.faculty],
               avatar: "",
-              number: data.number
+              number: data.number || ''
             })
             .catch((e) => {
               setError(e.message);
@@ -152,7 +152,7 @@ export const SignUpPage: React.FC = () => {
             errors.number ? errors.number.message : "Ваш номер телефона"
           }
         {...register("number", {
-          required: { value: true, message: "Поле обязательно" },
+          required: { value: false, message: "Поле не обязательно" },
           minLength: {
             value: 13,
             message: "Не корретный формат",

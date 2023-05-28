@@ -63,7 +63,7 @@ export const UpdateUnitForm: React.FC<UpdateUnitFormProps> = ({
 
   return (
     <Dialog open onClose={handleClose}>
-      <DialogTitle>Редактировать факультут</DialogTitle>
+      <DialogTitle>Редактировать факультет</DialogTitle>
       <DialogContent className="updateUnitDialogWrapper">
         <div className="updateUnitFormWrapper">
           <TextField

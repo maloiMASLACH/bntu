@@ -159,10 +159,10 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
           )}
 
           <FormControl fullWidth error={!!errors.masterId} color="success">
-            <InputLabel id="select-masterId">Преподователь</InputLabel>
+            <InputLabel id="select-masterId">Преподаватель</InputLabel>
             <Select
               id="master-select"
-              label="Преподователь"
+              label="Преподаватель"
               defaultValue={classData.masterId}
               {...register("masterId", {
                 required: { value: true, message: "Поле обязательно" },
@@ -177,7 +177,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
             <FormHelperText>
               {errors.masterId
                 ? errors.masterId.message
-                : "Преподователь занятия"}
+                : "Преподаватель занятия"}
             </FormHelperText>
           </FormControl>
 
@@ -269,7 +269,7 @@ export const UpdateClassForm: React.FC<UpdateClassFormProps> = ({
           color="success"
           disabled={isLoading}
         >
-          Создать
+          Обновить
         </Button>
       </DialogActions>
 
